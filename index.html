@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCW 450A Training Standard Quiz — U5709.0, U5710.0 & U5711.0</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-alt: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #f59e0b;
+      --accent-hover: #d97706;
+      --correct: #10b981;
+      --correct-bg: rgba(16, 185, 129, 0.15);
+      --wrong: #ef4444;
+      --wrong-bg: rgba(239, 68, 68, 0.15);
+      --border: #475569;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 1.25rem;
+      min-height: 100vh;
+    }
+
+    .app-container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Header & Scoreboard */
+    header {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .title-group h1 {
+      font-size: 1.25rem;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+
+    .title-group p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .score-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .pill span {
+      color: var(--accent);
+    }
+
+    /* Progress Bar */
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--bg);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--correct));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Unit Filter Tabs */
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tab-btn {
+      background: var(--bg);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+    }
+
+    /* Slide Card */
+    .slide-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .slide-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .badge-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .badge-unit {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .badge-skill {
+      background: var(--card-alt);
+      color: var(--text);
+    }
+
+    .slide-counter {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      color: var(--text);
+    }
+
+    /* Options */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      width: 100%;
+      text-align: left;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--accent);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .opt-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: var(--card-alt);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .option-btn.correct {
+      border-color: var(--correct);
+      background: var(--correct-bg);
+    }
+
+    .option-btn.correct .opt-letter {
+      background: var(--correct);
+      color: #06281e;
+    }
+
+    .option-btn.wrong {
+      border-color: var(--wrong);
+      background: var(--wrong-bg);
+    }
+
+    .option-btn.wrong .opt-letter {
+      background: var(--wrong);
+      color: #fff;
+    }
+
+    /* Rationale / Self-Correction Box */
+    .rationale-box {
+      margin-top: 1.25rem;
+      padding: 1rem 1.15rem;
+      border-radius: 10px;
+      border-left: 4px solid var(--accent);
+      background: rgba(15, 23, 42, 0.75);
+      display: none;
+    }
+
+    .rationale-box.visible {
+      display: block;
+    }
+
+    .rationale-status {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .rationale-status.pass {
+      color: var(--correct);
+    }
+
+    .rationale-status.fail {
+      color: var(--wrong);
+    }
+
+    .rationale-text {
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Controls Bar */
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-btn, .action-btn {
+      padding: 0.6rem 1.1rem;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover:not(:disabled), .action-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #0f172a;
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .action-btn.retry-slide {
+      background: transparent;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .action-btn.retry-slide:hover {
+      background: var(--accent);
+      color: #0f172a;
+    }
+
+    .action-btn.shuffle-btn {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .action-btn.shuffle-btn:hover {
+      background: var(--accent);
+      color: #0f172a;
+    }
+
+    /* Slide Navigator Grid */
+    .grid-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .grid-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .grid-header h2 {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .grid-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+      gap: 0.45rem;
+    }
+
+    .grid-dot {
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .grid-dot:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .grid-dot.current {
+      outline: 2px solid var(--accent);
+      color: var(--text);
+    }
+
+    .grid-dot.answered-correct {
+      background: var(--correct-bg);
+      border-color: var(--correct);
+      color: var(--correct);
+    }
+
+    .grid-dot.answered-wrong {
+      background: var(--wrong-bg);
+      border-color: var(--wrong);
+      color: var(--wrong);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <div class="header-top">
+        <div class="title-group">
+          <h1>Construction Craft Worker (450A) — Self-Scoring Study Deck</h1>
+          <p>Skilled Trades Ontario Training Standard (Draft 2022-03-16) • U5709.0, U5710.0 & U5711.0</p>
+        </div>
+        <div class="score-pills">
+          <div class="pill">Total Score: <span id="total-score">0 / 0 (0%)</span></div>
+          <div class="pill">U5709: <span id="u5709-score">0/20</span></div>
+          <div class="pill">U5710: <span id="u5710-score">0/20</span></div>
+          <div class="pill">U5711: <span id="u5711-score">0/20</span></div>
+        </div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-filter="ALL">All Questions (60)</button>
+        <button class="tab-btn" data-filter="U5709.0">U5709.0 Barriers & Fencing (20)</button>
+        <button class="tab-btn" data-filter="U5710.0">U5710.0 Natural Environment (20)</button>
+        <button class="tab-btn" data-filter="U5711.0">U5711.0 Backfill & Compact (20)</button>
+        <button class="tab-btn" data-filter="MISSED">Review Missed Only</button>
+      </div>
+    </header>
+
+    <main class="slide-card" id="slide-container">
+      <div class="slide-meta">
+        <div class="badge-group">
+          <span class="badge badge-unit" id="unit-badge">U5709.0</span>
+          <span class="badge badge-skill" id="skill-badge">Skill 5709.01</span>
+        </div>
+        <div class="slide-counter" id="slide-counter">Slide 1 of 60</div>
+      </div>
+
+      <div class="question-text" id="question-text"></div>
+      <div class="options-list" id="options-list"></div>
+
+      <div class="rationale-box" id="rationale-box">
+        <div class="rationale-status" id="rationale-status"></div>
+        <div class="rationale-text" id="rationale-text"></div>
+        <button class="action-btn retry-slide" id="retry-slide-btn">Self-Correct / Try This Slide Again</button>
+      </div>
+
+      <div class="controls-bar">
+        <button class="nav-btn" id="prev-btn">← Previous Slide</button>
+        <span style="font-size: 0.8rem; color: var(--muted);">Tip: Use Left / Right Arrow Keys</span>
+        <button class="nav-btn" id="next-btn">Next Slide →</button>
+      </div>
+    </main>
+
+    <section class="grid-panel">
+      <div class="grid-header">
+        <h2>Slide Navigator (Grouped by Reportable Subject)</h2>
+        <div class="grid-actions">
+          <button class="action-btn shuffle-btn" id="shuffle-deck-btn">🔀 Shuffle Deck & Options</button>
+          <button class="action-btn" id="reset-all-btn">Reset All Scores</button>
+        </div>
+      </div>
+      <div class="question-grid" id="question-grid"></div>
+    </section>
+  </div>
+
+  <script>
+    const MASTER_QUESTIONS = [
+      // ================= UNIT U5709.0: Select and Install Temporary and Permanent Barriers and Fencing (Questions 1 - 20) =================
+      {
+        id: 1, unit: "U5709.0", skill: "Skill 5709.01 — Follow Basic Blueprints and Specifications",
+        q: "Before driving steel fence posts or augering post holes along a project perimeter (Skill 5709.01), what mandatory step must be completed before breaking ground?",
+        options: [
+          "Verify valid underground utility locates and check site drawings for buried services along the fence line",
+          "Drive a two-metre steel test pin down with a sledgehammer to check whether bedrock interferes with augering",
+          "Spray white paint along the curb to mark post spacing",
+          "Water the topsoil heavily to soften the clay subgrade"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.01, underground utility locates (gas, hydro, telecom, water, sewer) and site drawings must be verified before driving posts or excavating post holes to prevent utility strikes."
+      },
+      {
+        id: 2, unit: "U5709.0", skill: "Skill 5709.01 — Follow Basic Blueprints and Specifications",
+        q: "On an Ontario utility locate marking sheet and ground paint layout, what buried utility is indicated by yellow paint or flags?",
+        options: [
+          "Natural gas, oil, steam, or flammable pipeline lines",
+          "Potable municipal water mains and fire hydrant lines",
+          "High-voltage primary electrical distribution cables encased inside red concrete-encased PVC duct banks",
+          "Fibre-optic telecommunications conduits and municipal traffic signal loop control wiring harnesses"
+        ],
+        answer: 0,
+        rationale: "Under standard Ontario utility colour codes (Skill 5709.01), Yellow designates gas, oil, steam, or petroleum; Red is electricity; Orange is telecom/communication; Blue is potable water; and Green is sewer/drainage."
+      },
+      {
+        id: 3, unit: "U5709.0", skill: "Skill 5709.01 — Follow Basic Blueprints and Specifications",
+        q: "When laying out a long permanent chain-link fence line across uneven terrain using site drawings (Skill 5709.01), how is straight horizontal alignment established between terminal corner posts?",
+        options: [
+          "Stretch a taut mason's string line or sight between the plumbed end/corner posts to align intermediate line posts",
+          "Measure off the nearest crooked asphalt curb edge every three metres so the fence mirrors the roadway waves",
+          "Space line posts by eye without setting corner posts",
+          "Lay chain-link mesh flat on the grass as a guide"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.01, corner/end terminal posts are set and plumbed first at the surveyed property/layout points, and a taut string line (or transit/laser line) is stretched between them to align all line posts."
+      },
+      {
+        id: 4, unit: "U5709.0", skill: "Skill 5709.01 — Follow Basic Blueprints and Specifications",
+        q: "Why do permanent fence specifications in Ontario require concrete post footings to extend below the local frost line (typically 1.2 m or deeper)?",
+        options: [
+          "To prevent winter frost heave from lifting the footing and throwing the fence posts out of plumb",
+          "To ensure the bottom of the galvanized steel post touches the groundwater table for electrical grounding",
+          "To reduce the volume of concrete needed per hole",
+          "To allow shorter line posts to be used above grade"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.01, extending concrete post footings below the local frost penetration depth prevents freezing soil moisture from heaving the footing upward and tilting the fence."
+      },
+      {
+        id: 5, unit: "U5709.0", skill: "Skill 5709.02 — Install Temporary Barriers",
+        q: "Why must precast concrete Jersey barriers be pinned or interlocked together end-to-end when installed along an active traffic work zone (Skill 5709.02)?",
+        options: [
+          "So the barriers act as a continuous chain that redirects an impacting vehicle without separating into the work zone",
+          "So rainwater can flow through the steel connecting loops and wash road salt out from underneath the barrier base",
+          "To make individual units lighter for the crane hook",
+          "To allow a 500 mm gap between each concrete section"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.02, unpinned precast concrete barriers can rotate or kick inward into the work zone when struck by a vehicle; inserting the steel connecting pin locks the units into a continuous impact-resistant barrier."
+      },
+      {
+        id: 6, unit: "U5709.0", skill: "Skill 5709.02 — Install Temporary Barriers",
+        q: "What is the critical requirement after interlocking hollow plastic water-filled traffic barriers around an excavation or roadway work zone?",
+        options: [
+          "Fill each unit to the specified water level (and add freeze protection in winter)",
+          "Leave every second plastic barrier completely empty so crews can move them by hand",
+          "Drill four 50 mm drainage holes through the bottom sidewall so rainwater never accumulates inside the shell",
+          "Stack three empty plastic barriers vertically on top of each other secured only with yellow caution tape"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.02, empty plastic barriers weigh very little and will blow over in high winds or shatter/launch upon impact unless ballasted to the manufacturer's specified water level (with brine/antifreeze additive in freezing weather)."
+      },
+      {
+        id: 7, unit: "U5709.0", skill: "Skill 5709.02 — Install Temporary Barriers",
+        q: "When hoisting precast concrete Jersey barriers off a flatbed trailer using a barrier lifting clamp (auto-tong), what safety practice is mandatory?",
+        options: [
+          "Center the clamp at the barrier's balance point, keep hands clear of pinch points, and guide with tag lines",
+          "Ride on top of the concrete barrier while the crane swings it into place to align the steel connecting loops",
+          "Stand directly underneath the suspended concrete block",
+          "Hook a single chain into one end loop to drag it off"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.02, precast barriers weigh several thousand pounds; lifting clamps or balanced two-leg slings must be centred over the centre of gravity and guided with tag lines while keeping hands and feet out of the crush zone."
+      },
+      {
+        id: 8, unit: "U5709.0", skill: "Skill 5709.02 — Install Temporary Barriers",
+        q: "Why are rectangular drainage scuppers cast into the bottom base of standard precast concrete Jersey barriers, and what must be checked during placement on a sloped road?",
+        options: [
+          "They allow surface stormwater to drain past the barrier and must be kept clear of debris to prevent lane flooding",
+          "They are designed exclusively as forklift tine pockets for lifting five barriers at once stacked end-to-end",
+          "They must be plugged solid with hydraulic cement mortar",
+          "They hold wooden 2x4 guardrail posts vertically upright"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.02, bottom scupper cutouts prevent the barrier wall from damming rainwater across active travel lanes; workers must ensure drainage paths are not blocked against sheet flow."
+      },
+      {
+        id: 9, unit: "U5709.0", skill: "Skill 5709.02 — Install Temporary Barriers",
+        q: "Under Ontario Regulation 213/91, when a construction project requires a covered public pedestrian walkway alongside a demolition or multi-storey building zone, what minimum overhead and side protection is required?",
+        options: [
+          "A tight boarded fence on the project side and an overhead roof designed for at least 2.4 kPa live load",
+          "A single strand of orange snow fencing tied to rebar posts with a blue poly tarp stretched overhead",
+          "Yellow caution tape strung at waist height along the curb",
+          "Plastic traffic cones spaced every six metres on the walk"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.02 and O. Reg. 213/91, covered public ways require a smooth, tight hoarding wall on the project side, a railing on the street side, adequate lighting, and an overhead roof structure capable of supporting at least 2.4 kPa (50 psf)."
+      },
+      {
+        id: 10, unit: "U5709.0", skill: "Skill 5709.03 — Install Temporary and Permanent Fencing",
+        q: "When installing temporary modular steel construction fence panels on surface base plates, what additional bracing is required if privacy mesh or wind-screen fabric is attached to the panels?",
+        options: [
+          "Install diagonal wind braces, sandbags/ballast weights, or driven ground pins to resist the increased wind sail load",
+          "Remove every second steel top coupler clip so individual fence panels can blow flat without bending the tubing",
+          "Set the base plates on loose round river gravel only",
+          "Cut the bottom legs off the panels to lower the height"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.03, privacy screening or wind fabric turns freestanding modular fence panels into a high-drag sail; extra ballast weights, outrigger wind braces, or ground anchors must be added to prevent wind tip-over."
+      },
+      {
+        id: 11, unit: "U5709.0", skill: "Skill 5709.03 — Install Temporary and Permanent Fencing",
+        q: "When driving studded steel T-posts to support temporary orange snow fencing or safety fencing, how must the T-posts and fabric be oriented relative to the prevailing wind or hazard side?",
+        options: [
+          "Drive T-posts with the studs facing the fabric, and fasten the fencing on the windward side pressing against the post",
+          "Drive T-posts at a 45-degree angle leaning into the walkway with the sharp top end left uncovered at eye level",
+          "Tie the snow fence only at the very top wire loop",
+          "Space T-posts twelve metres apart without tension"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.03, mounting fencing on the windward side of driven T-posts (with studs preventing vertical slippage and safety caps on top) ensures wind pressure pushes the fabric against the steel post rather than tearing the wire ties off."
+      },
+      {
+        id: 12, unit: "U5709.0", skill: "Skill 5709.03 — Install Temporary and Permanent Fencing",
+        q: "When installing permanent chain-link fencing (Skill 5709.03), how is the end of the woven wire fabric anchored securely to a terminal corner or end post before stretching?",
+        options: [
+          "Thread a vertical steel tension bar through the end links and secure it to the terminal post with tension bands",
+          "Wrap the loose wire fabric three times around the round terminal post and twist the mesh together by hand",
+          "Tack-weld each individual diamond link to the steel post",
+          "Use plastic zip-ties spaced every sixty centimetres only"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.03, a flat steel tension bar (stretcher bar) is woven vertically through the end diamond spirals of the chain-link fabric and bolted to the terminal post using evenly spaced tension bands."
+      },
+      {
+        id: 13, unit: "U5709.0", skill: "Skill 5709.03 — Install Temporary and Permanent Fencing",
+        q: "On which side of the line posts should permanent chain-link fabric be installed along a perimeter security fence?",
+        options: [
+          "On the outside (public/attack side) facing away from the site",
+          "On the inside facing the interior of the construction yard",
+          "Alternating weave-by-weave between the inside and outside of every consecutive line post along the run",
+          "Suspended 300 mm away from the line posts using long horizontal extension brackets bolted to the base"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.03, chain-link fabric is placed on the outside (public face) of the line posts so someone pushing against the fence from outside presses the fabric into the structural steel posts rather than popping the wire ties off."
+      },
+      {
+        id: 14, unit: "U5709.0", skill: "Skill 5709.03 — Install Temporary and Permanent Fencing",
+        q: "When stretching chain-link fence fabric with a fence stretcher and ratchet hoist (come-along), how do you tell when the fabric has reached proper tension?",
+        options: [
+          "The fabric stands taut and flat with slight spring when squeezed by hand, without deforming the diamond mesh",
+          "The steel diamond links are stretched completely closed into flat horizontal wires and the corner post bends",
+          "The bottom of the mesh lifts 400 mm off the ground",
+          "The fabric sags 150 mm between every two line posts"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.03, properly tensioned chain-link mesh is taut and uniform, giving slightly when the diamond is squeezed by hand; over-tensioning distorts the diamond pattern and pulls terminal posts out of plumb."
+      },
+      {
+        id: 15, unit: "U5709.0", skill: "Skill 5709.03 — Install Temporary and Permanent Fencing",
+        q: "Why must a horizontal brace rail and diagonal truss rod (turnbuckle tension rod) be installed between a terminal corner/gate post and the adjacent line post on a chain-link fence?",
+        options: [
+          "To counter the horizontal pull of the tensioned chain-link fabric and prevent the terminal post from leaning",
+          "To provide a convenient horizontal step ladder for workers to climb over the locked perimeter security gate",
+          "To replace the concrete footing on the corner post",
+          "To hold temporary cardboard warning signs upright"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.03, stretching chain-link fabric places high horizontal tension on end, corner, and gate posts; a horizontal brace rail combined with a diagonal truss rod transfers that pull to the base of the adjacent post."
+      },
+      {
+        id: 16, unit: "U5709.0", skill: "Skill 5709.03 — Install Temporary and Permanent Fencing",
+        q: "How should the top surface of a poured concrete post footing be finished around a permanent steel fence post?",
+        options: [
+          "Crown and slope the concrete top slightly above grade away from the post",
+          "Dish the concrete top into a bowl 100 mm below grade to catch rainwater",
+          "Leave the concrete footing 450 mm below the soil surface and backfill around the thin steel post with peat moss",
+          "Finish the concrete dead flat and wrap absorbent burlap around the post base to keep the steel constantly wet"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.03, crowning and sloping the top of the concrete footing slightly above grade sheds water away from the steel post collar, preventing standing water from rusting the post or freezing and cracking the footing."
+      },
+      {
+        id: 17, unit: "U5709.0", skill: "Skill 5709.04 — Dismantle, Store and Ship Barriers and Fencing",
+        q: "When dismantling temporary modular construction fencing at project completion (Skill 5709.04), what is the correct procedure for handling couplers, pins, and base stands?",
+        options: [
+          "Remove top couplers and braces in sequence, collect all bolts/pins into hardware bins, and stack panels flat on dunnage",
+          "Push the entire connected fence line over like dominoes and drive a loader across the panels to pop the clamps off",
+          "Leave steel base stands scattered in the tall grass",
+          "Cut the welded wire mesh off the frames with grinders"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.04, unbolting couplers systematically, storing small hardware in labelled containers, and stacking intact panels and bases neatly on dunnage prevents frame distortion and lost parts."
+      },
+      {
+        id: 18, unit: "U5709.0", skill: "Skill 5709.04 — Dismantle, Store and Ship Barriers and Fencing",
+        q: "How should chain-link fence fabric be prepared for storage and transport after being unfastened from the posts during dismantling?",
+        options: [
+          "Lay the mesh flat on the ground, roll it up tightly into a compact cylindrical roll, and tie it securely with wire",
+          "Drag the unrolled thirty-metre ribbon of wire mesh behind a pickup truck down the road to the storage yard",
+          "Fold the wire fabric into sharp square accordion creases",
+          "Stuff the loose mesh into an open dump truck box with rock"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.04, laying chain-link mesh flat and rolling it tightly into a bound roll prevents kinked wire spirals and tangled knuckles so the fabric can be unrolled cleanly on the next project."
+      },
+      {
+        id: 19, unit: "U5709.0", skill: "Skill 5709.04 — Dismantle, Store and Ship Barriers and Fencing",
+        q: "Before lifting and loading plastic water-filled barriers onto a flatbed truck for shipping off-site (Skill 5709.04), what step must be performed?",
+        options: [
+          "Open the bottom drain plugs to empty all ballast water completely before unpinning and lifting the units",
+          "Hoist the full water-ballasted plastic units by their top fill-hole lip using a single steel chain hook",
+          "Smash a hole in the side wall with a sledgehammer",
+          "Load them full of water without strapping them down"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.04, plastic water-filled barriers are not structural lifting vessels when full of water; they must be drained completely via the drain plug before unpinning, lifting, and stacking for transport."
+      },
+      {
+        id: 20, unit: "U5709.0", skill: "Skill 5709.04 — Dismantle, Store and Ship Barriers and Fencing",
+        q: "When stacking precast concrete Jersey barriers in a storage yard or on a flatbed trailer (Skill 5709.04), how must timber dunnage be placed?",
+        options: [
+          "Place level hardwood dunnage blocks of uniform thickness aligned vertically between tiers and respect max stack height",
+          "Stack concrete barriers four tiers high directly concrete-on-concrete without any wood blocking on soft muddy ground",
+          "Place a single round fence pipe under the middle only",
+          "Lean barriers sideways against a hollow block wall"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5709.04, timber blocking/dunnage placed at designated bearing points aligned vertically prevents concrete spalling, provides sling/fork clearance, and keeps stacked barriers stable."
+      },
+
+      // ================= UNIT U5710.0: Protect Natural Environment (Questions 21 - 40) =================
+      {
+        id: 21, unit: "U5710.0", skill: "Skill 5710.01 — Follow Environmental Plan",
+        q: "Before clearing, stripping topsoil, or operating heavy equipment near a creek, wetland, or wooded area, what document must be reviewed (Skill 5710.01)?",
+        options: [
+          "The project Environmental Protection / Erosion and Sediment Control (ESC) Plan and site drawings",
+          "The delivery driver's commercial bill of lading for the structural steel reinforcement shipment",
+          "The Concrete Finishing Association trowel catalogue",
+          "The local hardware store's monthly lumber price list"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.01, workers must follow the site Environmental Plan and ESC drawings to identify buffer zones, watercourses, protected trees, and required containment measures before ground disturbance begins."
+      },
+      {
+        id: 22, unit: "U5710.0", skill: "Skill 5710.01 — Follow Environmental Plan",
+        q: "Why must a Tree Protection Zone (TPZ) barrier fence be erected around the drip line (root zone) of designated trees before excavation or grading starts?",
+        options: [
+          "To prevent equipment traffic and material stockpiles from compacting soil and crushing shallow feeder roots",
+          "To provide a shaded parking corral where excavators and fuel trucks can park under the tree canopy",
+          "To keep falling autumn leaves out of the trench",
+          "To mark which trees should be used as winch anchors"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.01, most tree roots spread horizontally near the surface out to and beyond the canopy drip line; driving equipment or piling soil inside the TPZ compacts soil pores, suffocates roots, and kills the tree."
+      },
+      {
+        id: 23, unit: "U5710.0", skill: "Skill 5710.01 — Follow Environmental Plan",
+        q: "In what chronological sequence must Erosion and Sediment Control (ESC) measures (such as perimeter silt fencing and catchbasin protection) be installed on a new site?",
+        options: [
+          "Before any topsoil stripping, grubbing, or bulk excavation begins",
+          "Only after the final asphalt paving and landscaping are completed",
+          "Wait until the first heavy thunderstorm washes mud into the municipal storm sewer to see where water flows",
+          "Install them on the last day of the project just before the municipal building inspector arrives for sign-off"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.01, perimeter sediment controls and storm inlet protection must be installed prior to stripping vegetation or disturbing soil so the very first runoff event is contained."
+      },
+      {
+        id: 24, unit: "U5710.0", skill: "Skill 5710.01 — Follow Environmental Plan",
+        q: "Why is sediment-laden muddy runoff from a stripped construction site considered a serious environmental pollutant if it enters a natural stream or river?",
+        options: [
+          "Suspended silt clouds the water (turbidity), smothers fish spawning gravel beds, and clogs fish gills",
+          "Suspended clay particles dissolve instantly into pure oxygen and cause the stream water to freeze in summer",
+          "Natural creek water is already 90% clay sediment",
+          "Muddy runoff only affects the colour of concrete"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.01, sediment runoff degrades water quality, blocks sunlight for aquatic plants, abrades and clogs fish gills, and buries gravel spawning habitat."
+      },
+      {
+        id: 25, unit: "U5710.0", skill: "Skill 5710.01 — Follow Environmental Plan",
+        q: "During dry, windy summer grading operations, what environmental control is used to suppress fugitive airborne dust on haul roads and stripped earth?",
+        options: [
+          "Apply water spray from a water truck (or approved dust suppressants) and cover or stabilize inactive stockpiles",
+          "Spray waste crankcase motor oil and diesel fuel across the dirt haul road using a gravity spreader bar",
+          "Use high-powered leaf blowers to blow dust off-site",
+          "Increase dump truck speeds to fifty kilometres per hour"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.01, wetting haul roads with water (or approved non-toxic suppressants), reducing vehicle speeds, and tarping/seeding stockpiles prevents airborne dust migration."
+      },
+      {
+        id: 26, unit: "U5710.0", skill: "Skill 5710.02 — Install Containment Measures",
+        q: "When installing geotextile silt fencing along the toe of a disturbed slope (Skill 5710.02), on which side of the fabric must the wooden support stakes be driven?",
+        options: [
+          "On the downhill (downstream) side of the fabric",
+          "On the uphill (upstream) side of the fabric",
+          "Alternating every second stake between the uphill side and downhill side of the woven geotextile sheet",
+          "Laid flat horizontally on top of the ground without driving any stakes into the soil subgrade"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.02, stakes must always be on the downhill (downstream) side of the geotextile fabric so when runoff water and sediment pond against the uphill face, the fabric presses into the stakes instead of pulling away from the staples."
+      },
+      {
+        id: 27, unit: "U5710.0", skill: "Skill 5710.02 — Install Containment Measures",
+        q: "Why must the bottom edge of a silt fence be trenched into the ground (typically 150 mm x 150 mm), tucked into the trench, and compacted with backfill?",
+        options: [
+          "To prevent stormwater runoff from flowing underneath the bottom edge of the fabric ('undercutting') and washing out",
+          "To allow groundhogs and field mice to tunnel freely underneath the fabric without chewing through the mesh",
+          "To keep the top of the fence below ankle height",
+          "So workers do not have to drive stakes into the soil"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.02, a silt fence pinned only at ground level will immediately be undercut by flowing water; trenching and backfilling the bottom flap anchors the skirt and blocks underflow."
+      },
+      {
+        id: 28, unit: "U5710.0", skill: "Skill 5710.02 — Install Containment Measures",
+        q: "When joining two rolls of silt fence fabric along a continuous perimeter run, how should the ends be connected so sediment cannot leak through the joint?",
+        options: [
+          "Overlap the two end stakes, twist/roll them together (or overlap a full stake bay), and drive both stakes tightly side-by-side",
+          "Leave a 300 mm open gap between the two rolls so excess mud can drain rapidly onto the neighbouring property",
+          "Tape the wet fabric ends together with masking tape",
+          "Tie the top corners together with a single cotton string"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.02, rolling the two end posts together (twist-lock method) and driving them side-by-side in the trench creates a tight vertical seam that cannot gap open under water pressure."
+      },
+      {
+        id: 29, unit: "U5710.0", skill: "Skill 5710.02 — Install Containment Measures",
+        q: "Why are the two ends of a silt fence line turned slightly uphill ('J-hooked' or smiled) along a contour slope?",
+        options: [
+          "To pond runoff behind the fence rather than channeling water around the ends where it would cause gully erosion",
+          "To direct all site stormwater into a concentrated high-speed jet aimed at the nearest municipal sidewalk",
+          "To use up extra leftover geotextile fabric on the roll",
+          "To mark the property corners for the land surveyor"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.02, turning the ends of a silt fence upslope (J-hooks) traps and ponds water behind the barrier so sediment settles out instead of racing around the end post and eroding the bank."
+      },
+      {
+        id: 30, unit: "U5710.0", skill: "Skill 5710.02 — Install Containment Measures",
+        q: "When installing a row of straw bales as a temporary sediment barrier or ditch check dam (Skill 5710.02), how must each bale be anchored?",
+        options: [
+          "Entrench the bales ~100 mm into the soil, butt ends tightly together with twine off the ground, and drive two stakes per bale",
+          "Set the bales loosely on top of the grass with 150 mm gaps between them and no stakes driven into the ground",
+          "Cut the binding twine off before placing the bales",
+          "Stack bales three high vertically without any stakes"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.02, straw bales will float or wash out unless entrenched ~100 mm into the ground, tightly butted with bindings horizontal (off the wet soil), and pinned with two wooden stakes or rebar pins per bale."
+      },
+      {
+        id: 31, unit: "U5710.0", skill: "Skill 5710.02 — Install Containment Measures",
+        q: "What containment measure is installed inside or over a municipal storm sewer catchbasin grate to prevent site sediment from entering the storm pipe while still allowing water to drain?",
+        options: [
+          "A geotextile catchbasin filter insert (silt sack) or filter fabric barrier",
+          "A solid 19 mm sheet of plywood caulked watertight over the iron grate",
+          "A bucket of coarse highway road salt poured directly into the catchbasin sump trap every morning",
+          "A high-volume trash pump discharging muddy trench water directly through the open manhole cover"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.02, geotextile silt sacks (catchbasin inserts) or gravel/filter-fabric wraps trap suspended sand and silt while allowing filtered stormwater to enter the storm drain."
+      },
+      {
+        id: 32, unit: "U5710.0", skill: "Skill 5710.02 — Install Containment Measures",
+        q: "When pumping muddy water out of an excavation during dewatering (Skill 5710.02), where must the pump discharge hose be directed?",
+        options: [
+          "Into a geotextile dewatering filter bag (dirt bag), sediment settling tank, or vegetated filtration basin—never straight into a creek or storm drain",
+          "Directly into the nearest roadside storm sewer catchbasin or natural creek bed so the mud washes away off-site immediately",
+          "Onto an active steep clay excavation wall face",
+          "Directly into the sanitary sewer cleanout pipe"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.02, discharging turbid trench water directly into storm sewers or watercourses violates environmental regulations; discharge must pass through a filter bag, settling tank, or vegetated buffer on a stable pad."
+      },
+      {
+        id: 33, unit: "U5710.0", skill: "Skill 5710.02 — Install Containment Measures",
+        q: "At what point must accumulated sediment trapped behind a silt fence or inside a catchbasin silt sack be cleaned out and removed?",
+        options: [
+          "When sediment reaches roughly one-third to one-half of the barrier height or sack capacity (or after major storms)",
+          "Only after the silt completely buries the top of the fence and overflows across the public roadway",
+          "Never—silt fences are designed to hold infinite mud",
+          "Once every five years regardless of rainfall events"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.02, sediment barriers lose filtering capacity and risk collapsing when sediment builds up past one-third to one-half of the fence height or insert depth; regular inspection and cleanout are required."
+      },
+      {
+        id: 34, unit: "U5710.0", skill: "Skill 5710.03 — Manage Spills and Solid Wastes",
+        q: "In a site emergency spill kit (Skill 5710.03), why are white 'oil-only' (hydrophobic) absorbent pads and booms chosen over grey universal pads when a diesel or hydraulic leak occurs on water?",
+        options: [
+          "White hydrophobic absorbents repel water and float on the surface while soaking up only petroleum hydrocarbons",
+          "White pads sink immediately to the bottom of the pond and dissolve diesel fuel into harmless carbon dioxide gas",
+          "Grey universal pads ignite if they touch cold water",
+          "White pads are only used for sweeping dry concrete dust"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.03, white oil-only (hydrophobic) pads and booms absorb oils/fuels while repelling water, allowing them to float on puddles, ditches, or sumps without sinking from water weight."
+      },
+      {
+        id: 35, unit: "U5710.0", skill: "Skill 5710.03 — Manage Spills and Solid Wastes",
+        q: "A hydraulic hose ruptures on an excavator, spilling hydraulic oil onto the ground heading toward a storm drain. What is the immediate priority action once it is safe?",
+        options: [
+          "Stop the source (shut down the machine), dike/block the storm drain with absorbent booms or soil, and contain the spill",
+          "Grab a high-pressure water hose and flush the hydraulic oil down the storm drain before the supervisor sees it",
+          "Leave the machine running and go to lunch first",
+          "Set the spilled hydraulic oil on fire with a torch"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.03, spill response follows Stop, Contain, Clean Up, Report: shut off the source immediately, block drains/waterways from the perimeter inward using booms or earth dikes, absorb the spill, and report it."
+      },
+      {
+        id: 36, unit: "U5710.0", skill: "Skill 5710.03 — Manage Spills and Solid Wastes",
+        q: "After using absorbent pads, socks, and granular floor-dry to clean up a diesel fuel spill on site, how must the oil-soaked absorbents and contaminated soil be disposed of?",
+        options: [
+          "Seal them in labelled hazardous waste bags/drums for licensed disposal",
+          "Toss them into the regular cardboard and scrap wood recycling dumpster",
+          "Bury the fuel-soaked pads at the bottom of the foundation utility trench before backfilling with gravel",
+          "Burn the oil-soaked absorbent booms inside an open fifty-gallon steel barrel at the back of the site"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.03, used petroleum-soaked absorbents and excavated fuel-contaminated soil are hazardous waste and must be placed in sealed, labelled hazardous waste containers for disposal by a licensed carrier."
+      },
+      {
+        id: 37, unit: "U5710.0", skill: "Skill 5710.03 — Manage Spills and Solid Wastes",
+        q: "Where must ready-mix concrete trucks and concrete pump operators wash out their chutes and hoppers on a construction site (Skill 5710.03)?",
+        options: [
+          "Only inside a designated, plastic-lined, leak-proof concrete washout containment bin or pit located away from drains",
+          "Directly into the roadside ditch or municipal storm catchbasin so the cement paste washes away with rainwater",
+          "Around the base of protected trees inside the TPZ",
+          "Into the nearest natural creek or wetland buffer zone"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.03, concrete washout water is highly caustic (pH 12–13) and toxic to aquatic life; all chute and pump washout must be contained in a lined, watertight washout pit or bin."
+      },
+      {
+        id: 38, unit: "U5710.0", skill: "Skill 5710.03 — Manage Spills and Solid Wastes",
+        q: "When storing liquid fuel drums, form release oils, or curing compounds on site (Skill 5710.03), what secondary containment is required?",
+        options: [
+          "Store containers on a spill-containment pallet or lined bermed area capable of holding at least 110% of the largest drum",
+          "Set the drums directly on bare gravel next to a storm catchbasin with the bungs left open for ventilation",
+          "Bury single-wall steel drums halfway into wet clay soil",
+          "Stack drums four high on top of loose wooden pallets"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.03, liquid chemical and fuel storage requires secondary containment (spill pallets or impermeable berms) located away from watercourses and drains, with a spill kit and SDS readily accessible."
+      },
+      {
+        id: 39, unit: "U5710.0", skill: "Skill 5710.03 — Manage Spills and Solid Wastes",
+        q: "Why must solid construction wastes (such as scrap steel, clean wood, cardboard, drywall, and hazardous chemical containers) be segregated into designated bins on site?",
+        options: [
+          "To comply with Ontario waste reduction regulations, divert recyclable materials from landfill, and isolate hazardous waste",
+          "To make the waste bins heavier so the disposal contractor charges twice as much per metric tonne hauled",
+          "Because all waste bins are dumped into the same hole",
+          "So workers can burn painted wood and plastics together"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.03, source separation keeps recyclable metals, wood, concrete, and cardboard out of landfills and prevents hazardous materials (paint, solvents, batteries, aerosols) from contaminating solid waste streams."
+      },
+      {
+        id: 40, unit: "U5710.0", skill: "Skill 5710.03 — Manage Spills and Solid Wastes",
+        q: "While excavating a utility trench on a former industrial site, you uncover dark stained soil with a strong chemical/hydrocarbon odour. What is the required action?",
+        options: [
+          "Stop digging in that area, secure the zone, and notify the supervisor",
+          "Mix the stained soil with clean gravel and use it as trench backfill",
+          "Load the smelly soil onto an unlined dump truck immediately and spread it across a residential lawn off-site",
+          "Wash the dark chemical stain deeper into the water table using a two-inch high-pressure discharge hose"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5710.03, unexpected contaminated soil must not be spread or mixed with clean fill; work in that spot must stop and the supervisor/environmental specialist must be notified for testing and proper stockpiling on poly liners."
+      },
+
+      // ================= UNIT U5711.0: Backfill/Compact Site (Questions 41 - 60) =================
+      {
+        id: 41, unit: "U5711.0", skill: "Skill 5711.01 — Follow Basic Blueprints",
+        q: "When civil blueprints specify compacting granular backfill to '98% Standard Proctor Maximum Dry Density (SPMDD)' (Skill 5711.01), what does that specification mean?",
+        options: [
+          "The compacted in-place dry density of the soil must reach at least 98% of the lab-determined maximum dry density at optimum moisture",
+          "The backfill material must contain 98% water by volume and only 2% crushed limestone aggregate when placed in the trench",
+          "Only 98% of the trench length needs to be backfilled",
+          "The plate tamper engine must run at 98% throttle speed"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.01, Standard Proctor testing determines the maximum dry density a soil can achieve at its optimum moisture content; a 98% SPMDD spec requires field compaction (verified by nuclear densometer) to reach 98% of that lab benchmark."
+      },
+      {
+        id: 42, unit: "U5711.0", skill: "Skill 5711.01 — Follow Basic Blueprints",
+        q: "According to Ontario Provincial Standard Specifications (OPSS) referenced on site drawings (Skill 5711.01), what is the key difference between Granular 'A' and Granular 'B' aggregate?",
+        options: [
+          "Granular A is a finely graded 19 mm crushed stone/gravel for top base courses, while Granular B is a coarser sub-base material",
+          "Granular A is uncrushed organic topsoil mixed with peat moss, while Granular B is pure washed plastering mason sand",
+          "Granular A contains boulders up to 600 mm in diameter",
+          "Granular B can only be used inside concrete mix drums"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.01, Granular A is a dense, well-graded 19 mm (3/4 in.) crushed aggregate used for high-strength road/slab base courses, whereas Granular B has a wider gradation with larger stones used for deeper sub-base fills."
+      },
+      {
+        id: 43, unit: "U5711.0", skill: "Skill 5711.01 — Follow Basic Blueprints",
+        q: "Why do structural and civil blueprints prohibit using frozen soil chunks, snow, ice, or organic topsoil as structural backfill beneath a floor slab or roadway?",
+        options: [
+          "Frozen chunks melt and organic matter decays over time, leaving voids that cause severe settlement and slab cracking",
+          "Frozen soil and organic peat moss compact into a layer harder than granite that dulls concrete saw blades later",
+          "Organic topsoil is too expensive to bury in a trench",
+          "Snow and ice increase the Proctor density above 110%"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.01, frozen lumps cannot be compacted and leave water-filled voids when they thaw, while organic material decomposes and compresses under load, causing differential settlement."
+      },
+      {
+        id: 44, unit: "U5711.0", skill: "Skill 5711.02 — Perform Traffic Control for Job Location",
+        q: "When acting as a spotter guiding a backing dump truck to dump backfill at the edge of an excavation (Skill 5711.02), where must you stand?",
+        options: [
+          "On stable ground in full view of the driver's side mirror, clear of the truck's rear path and dump radius",
+          "Directly behind the centre of the tailgate inside the driver's blind spot waving both hands above your head",
+          "Down inside the bottom of the trench where the load drops",
+          "Between the backing dump truck and a parked excavator"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.02, a spotter must maintain continuous eye/mirror contact with the driver from a safe position outside the vehicle's path and tip-over radius—if the driver loses sight of the spotter, the truck must stop immediately."
+      },
+      {
+        id: 45, unit: "U5711.0", skill: "Skill 5711.02 — Perform Traffic Control for Job Location",
+        q: "What major overhead and stability hazards must a spotter check before signaling a dump truck driver to raise the dump box to discharge granular backfill?",
+        options: [
+          "Verify safe clearance from overhead power lines and ensure the truck sits on firm, level ground so it cannot tip over",
+          "Ensure the truck is parked sideways across a steep muddy slope with the front steering wheels turned sharply uphill",
+          "Have the driver rev the truck to 40 km/h in reverse",
+          "Chain the tailgate shut so the load stays at the top"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.02, a raised dump box can contact overhead high-voltage power lines or tip over violently if the truck is on soft, uneven, or sloped ground (especially if wet clay sticks in the top of the box)."
+      },
+      {
+        id: 46, unit: "U5711.0", skill: "Skill 5711.02 — Perform Traffic Control for Job Location",
+        q: "When a loader or skid-steer is dumping backfill into a trench while a worker operates a hand tamper below, what safety rule applies (Skill 5711.02)?",
+        options: [
+          "Workers in the trench must move well clear of the drop zone before any bucket load is dumped",
+          "The worker in the trench should stand directly under the falling gravel to tamp it as it lands",
+          "The loader operator should dump loads blindly over the spoil pile without communicating with the trench crew",
+          "The worker should hold onto the bottom of the loader bucket to guide it over the edge of the trench wall"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.02, no worker may remain beneath or within the fall zone of a dump truck, loader bucket, or excavator while backfill material is being discharged into an excavation."
+      },
+      {
+        id: 47, unit: "U5711.0", skill: "Skill 5711.03 — Place Protection Board and/or Insulation",
+        q: "Before applying rigid insulation or dimpled protection board to an exterior foundation wall prior to backfilling (Skill 5711.03), how must the concrete wall surface be prepared?",
+        options: [
+          "Remove projecting form ties, patch tie holes, scrape off concrete fins, and verify waterproofing is cured and intact",
+          "Leave sharp steel snap-tie ends sticking out 50 mm so you can impale the waterproofing membrane over them",
+          "Spray diesel fuel over the dampproofing tar coating",
+          "Wash the uncured liquid membrane off with a pressure washer"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.03, protruding snap ties and sharp concrete fins will puncture waterproofing membranes and prevent rigid insulation or protection board from seating flat against the foundation wall."
+      },
+      {
+        id: 48, unit: "U5711.0", skill: "Skill 5711.03 — Place Protection Board and/or Insulation",
+        q: "Why is protection board or dimpled drainage mat installed over a foundation wall's waterproofing membrane before placing backfill?",
+        options: [
+          "To shield the waterproofing membrane from being punctured by angular stones during backfilling and settlement",
+          "To replace the concrete footing weeping tile pipe at the base of the foundation wall excavation",
+          "To bond the backfill gravel permanently to the wall",
+          "To trap groundwater pressure against the concrete cracks"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.03, protection board and dimpled drainage membranes protect delicate waterproofing coatings from rock impact/abrasion during backfilling and channel groundwater vertically down to the footing drain."
+      },
+      {
+        id: 49, unit: "U5711.0", skill: "Skill 5711.03 — Place Protection Board and/or Insulation",
+        q: "When adhering extruded polystyrene (XPS) rigid foam insulation boards to a bituminously dampproofed concrete foundation wall (Skill 5711.03), what adhesive must be selected?",
+        options: [
+          "Foam-compatible adhesive (solvent-free) or mechanical fasteners",
+          "Solvent-based petroleum contact cement or gasoline-thinned mastic",
+          "Hot-applied 200-degree Celsius roofing asphalt mopped directly across the face of the polystyrene foam",
+          "Standard water-soluble school glue brushed in a single thin stripe along the top edge of the concrete wall"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.03, petroleum solvents in standard mastics melt and dissolve polystyrene foam; only adhesives explicitly rated for polystyrene foam (or approved mechanical anchors) may be used."
+      },
+      {
+        id: 50, unit: "U5711.0", skill: "Skill 5711.03 — Place Protection Board and/or Insulation",
+        q: "When installing dimpled foundation drainage membrane around the exterior of a basement wall (Skill 5711.03), how must the dimples and top edge be installed?",
+        options: [
+          "Install with the dimples facing inward against the wall to create an air/drainage gap, and cap the top edge with termination strip",
+          "Install with the flat side against the wall and leave the top open like a funnel so backfill dirt falls behind the mat",
+          "Stop the membrane one metre above the weeping tile",
+          "Cut vertical slits every 300 mm to let mud through"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.03, dimples face the foundation wall to form a continuous drainage channel down to the weeping tile, and a profiled termination bar/moulding at the top edge stops soil from falling behind the mat."
+      },
+      {
+        id: 51, unit: "U5711.0", skill: "Skill 5711.04 — Place and Compact Material Using Equipment",
+        q: "Why must backfill material be placed and compacted in uniform horizontal 'lifts' (e.g., 150 mm to 300 mm thick) rather than dumping 2 metres of soil in at once and compacting only the top?",
+        options: [
+          "Compaction energy from surface tampers cannot penetrate deep loose fill, leaving the lower soil uncompacted and prone to settling",
+          "Thin horizontal lifts trap more air pockets between the stones so the trench stays soft for future digging",
+          "Compacting the top two metres crushes the bedrock below",
+          "Thin lifts eliminate the need for moisture control"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.04, hand tampers and walk-behind compactors can only densify soil to a limited depth (typically 150–300 mm depending on machine weight and soil type); thick uncompacted lifts bridge over voids and settle later."
+      },
+      {
+        id: 52, unit: "U5711.0", skill: "Skill 5711.04 — Place and Compact Material Using Equipment",
+        q: "Which walk-behind compaction machine is best suited for compacting cohesive clay soils in a narrow utility trench versus non-cohesive granular sand and gravel in an open slab base?",
+        options: [
+          "A jumping-jack rammer (high-impact stroke) for cohesive clay trenches; a vibratory plate tamper for granular sand/gravel",
+          "A lightweight vibratory plate tamper for sticky heavy clay; a narrow-shoe jumping-jack rammer for finishing hot asphalt",
+          "A smooth static lawn roller for deep clay trenches",
+          "A wooden hand bull-float for compacting road gravel"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.04, cohesive soils (clay/silt) require high-amplitude impact force from a rammer (jumping jack) or padfoot roller to shear air voids out, whereas granular soils (sand/gravel) compact best under high-frequency vibration from a plate compactor."
+      },
+      {
+        id: 53, unit: "U5711.0", skill: "Skill 5711.04 — Place and Compact Material Using Equipment",
+        q: "How does soil moisture content affect mechanical compaction when backfilling with granular or cohesive soils (Skill 5711.04)?",
+        options: [
+          "Soil must be near 'optimum moisture content'—too dry creates friction between grains, while too wet causes pumping and rutting",
+          "Soil must be bone-dry (0% moisture) or completely flooded under standing water to reach 100% Standard Proctor density",
+          "Moisture content has zero effect on soil density",
+          "Adding motor oil instead of water doubles compaction"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.04, optimum moisture lubricates soil particles so they slide tightly together under compaction; overly dry soil resists rearrangement, while saturated soil traps incompressible water that prevents compaction ('pumping')."
+      },
+      {
+        id: 54, unit: "U5711.0", skill: "Skill 5711.04 — Place and Compact Material Using Equipment",
+        q: "When backfilling around a newly laid PVC or concrete sewer pipe in a trench (the 'haunch' and 'bedding' zone), how must material be placed and compacted?",
+        options: [
+          "Place and hand-tamp granular bedding evenly on both sides of the pipe simultaneously so it is not pushed off line or crushed",
+          "Dump a full loader bucket of large boulders directly onto one side of the pipe and run a heavy roller over the bare crown",
+          "Leave the haunch zone underneath the pipe sides hollow",
+          "Compact only the left side of the pipe to the top first"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.04, compacting select granular material in balanced lifts on both sides of a utility pipe supports the pipe haunches and prevents lateral movement or crown crushing."
+      },
+      {
+        id: 55, unit: "U5711.0", skill: "Skill 5711.04 — Place and Compact Material Using Equipment",
+        q: "Why must heavy ride-on vibratory rollers be kept back from newly poured basement foundation walls, using light walk-behind compactors near the wall instead?",
+        options: [
+          "Heavy rollers and unbraced backfilling create excessive lateral earth pressure that can crack or push the wall inward",
+          "The vibration from a large ride-on roller magnetizes the foundation rebar and melts the footing concrete",
+          "Walk-behind plate tampers compact three metres deep",
+          "Heavy rollers cannot drive on crushed limestone gravel"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.04, foundation walls are sensitive to lateral earth loads before the main floor framing/slab is in place; operating heavy compactors close to the wall can bow, crack, or collapse the foundation."
+      },
+      {
+        id: 56, unit: "U5711.0", skill: "Skill 5711.05 — Install Vapour Barriers",
+        q: "Before rolling out a polyethylene vapour barrier (or under-slab radon barrier) over a compacted granular base for a concrete slab-on-grade (Skill 5711.05), how must the base be prepared?",
+        options: [
+          "Verify the granular base is compacted to grade and free of sharp stones or debris, adding a fine blinding layer if specified",
+          "Scatter sharp broken concrete chunks and scrap tie wire across the gravel base to grip the underside of the plastic sheet",
+          "Dig 300 mm trenches across the middle of the gravel pad",
+          "Spray waste form release oil across the compacted stone"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.05, a smooth, tightly compacted granular base free of sharp rocks or debris prevents foot traffic and rebar chairs from puncturing the polyethylene vapour barrier."
+      },
+      {
+        id: 57, unit: "U5711.0", skill: "Skill 5711.05 — Install Vapour Barriers",
+        q: "When installing sheet polyethylene vapour barrier beneath an interior concrete floor slab (Skill 5711.05), how must adjacent sheets and pipe penetrations be sealed?",
+        options: [
+          "Overlap seams by the specified width (typically 150–300 mm) and seal all joints and pipe boots airtight with approved tape",
+          "Butt the edges of the plastic sheets loosely together with a 50 mm gap between rolls so ground moisture can breathe",
+          "Cut a 300 mm clearance hole around every plumbing pipe",
+          "Fasten seams by driving 150 mm spikes through the plastic"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.05, overlapping seams 150–300 mm (6–12 in.) and sealing all laps, perimeter edges, and plumbing penetrations with vapour-barrier tape blocks ground moisture and soil gas (radon) migration."
+      },
+      {
+        id: 58, unit: "U5711.0", skill: "Skill 5711.05 — Install Vapour Barriers",
+        q: "If a tear or puncture is discovered in the under-slab polyethylene vapour barrier after the reinforcing steel crew walks across it, what must be done before pouring concrete?",
+        options: [
+          "Clean and dry the area around the tear and patch it with a piece of matching poly sheeting overlapping at least 150 mm and taped all around",
+          "Cut the torn section out completely and leave a one-metre square patch of bare gravel exposed to the concrete pour",
+          "Cover the rip with a handful of loose dry sand only",
+          "Pour water into the tear to seal the plastic to the stone"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.05, any damaged or punctured areas in a vapour/radon barrier must be patched with matching polyethylene overlapping at least 150 mm on all sides and sealed with manufacturer's sheathing/vapour tape."
+      },
+      {
+        id: 59, unit: "U5711.0", skill: "Skill 5711.06 — Install Materials to Grade",
+        q: "While checking the compacted granular sub-base elevation for a concrete slab using a rotating laser and grade rod (Skill 5711.06), you find a localized spot that is 40 mm too LOW. How do you correct it?",
+        options: [
+          "Scarify/moisten the surface slightly, add the specified granular material in a lift, level to grade, and re-compact thoroughly",
+          "Dump loose dry sand into the low spot right before the concrete truck arrives and smooth it with a broom without compacting",
+          "Fill the low depression with scrap pieces of drywall board",
+          "Leave the low spot untouched so the concrete is thicker"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.06, low spots in a granular base must be filled with specified granular material, moisture-conditioned, and mechanically re-compacted so the patched area does not settle under the slab."
+      },
+      {
+        id: 60, unit: "U5711.0", skill: "Skill 5711.06 — Install Materials to Grade",
+        q: "Why is it critical to finish the granular base course accurately to the specified design grade and tolerance across the entire slab footprint (Skill 5711.06)?",
+        options: [
+          "High spots reduce concrete slab thickness (causing structural weakness and cracking), while low spots waste expensive concrete",
+          "An uneven base course with 100 mm high ridges makes the concrete slab cure twice as fast without needing contraction joints",
+          "Grade accuracy only matters for exterior asphalt roads",
+          "A high gravel spot increases the slab thickness above it"
+        ],
+        answer: 0,
+        rationale: "Under Skill 5711.06, if the granular base is left high in spots, the concrete slab poured to a level top elevation becomes thin over those humps—creating weak pinch points that crack—while low spots cause concrete overruns."
+      }
+    ];
+
+    const STORAGE_KEY = "ccw_450a_u5709_u5710_u5711_state_v1";
+    const UNIT_ORDER = ["U5709.0", "U5710.0", "U5711.0"];
+    const LETTERS = ["A", "B", "C", "D"];
+
+    let QUESTIONS = [];
+    let userResponses = {};
+    let activeFilter = "ALL";
+    let currentSlideIndex = 0;
+
+    // Fisher-Yates Array Shuffler
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // Shuffles questions WITHIN each reportable subject group (U5709.0, U5710.0, U5711.0)
+    // and shuffles each question's 4 options while updating the answer index
+    function buildShuffledDeck() {
+      let combinedDeck = [];
+
+      UNIT_ORDER.forEach(unitCode => {
+        const unitQuestions = MASTER_QUESTIONS
+          .filter(q => q.unit === unitCode)
+          .map(q => {
+            const correctOptionText = q.options[q.answer];
+            const shuffledOptions = shuffleArray(q.options);
+            const newAnswerIndex = shuffledOptions.indexOf(correctOptionText);
+            return {
+              ...q,
+              options: shuffledOptions,
+              answer: newAnswerIndex
+            };
+          });
+
+        const shuffledUnitQuestions = shuffleArray(unitQuestions);
+        combinedDeck = combinedDeck.concat(shuffledUnitQuestions);
+      });
+
+      return combinedDeck;
+    }
+
+    function loadOrInitializeState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.deck) && parsed.deck.length === MASTER_QUESTIONS.length) {
+            QUESTIONS = parsed.deck;
+            userResponses = parsed.responses || {};
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn("Could not parse saved state, initializing fresh shuffled deck.");
+      }
+
+      QUESTIONS = buildShuffledDeck();
+      userResponses = {};
+      saveState();
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        deck: QUESTIONS,
+        responses: userResponses
+      }));
+    }
+
+    function getFilteredQuestions() {
+      if (activeFilter === "ALL") return QUESTIONS;
+      if (activeFilter === "MISSED") {
+        return QUESTIONS.filter(q => userResponses[q.id] !== undefined && userResponses[q.id] !== q.answer);
+      }
+      return QUESTIONS.filter(q => q.unit === activeFilter);
+    }
+
+    function updateScoreboard() {
+      const answeredIds = Object.keys(userResponses);
+      let totalCorrect = 0;
+      let u5709Correct = 0, u5710Correct = 0, u5711Correct = 0;
+
+      QUESTIONS.forEach(q => {
+        if (userResponses[q.id] === q.answer) {
+          totalCorrect++;
+          if (q.unit === "U5709.0") u5709Correct++;
+          if (q.unit === "U5710.0") u5710Correct++;
+          if (q.unit === "U5711.0") u5711Correct++;
+        }
+      });
+
+      const pct = answeredIds.length > 0 ? Math.round((totalCorrect / answeredIds.length) * 100) : 0;
+      document.getElementById("total-score").textContent = `${totalCorrect} / ${answeredIds.length} (${pct}%)`;
+      document.getElementById("u5709-score").textContent = `${u5709Correct}/20`;
+      document.getElementById("u5710-score").textContent = `${u5710Correct}/20`;
+      document.getElementById("u5711-score").textContent = `${u5711Correct}/20`;
+
+      const progressPct = (answeredIds.length / QUESTIONS.length) * 100;
+      document.getElementById("progress-fill").style.width = `${progressPct}%`;
+    }
+
+    function renderSlide() {
+      const filtered = getFilteredQuestions();
+
+      if (filtered.length === 0) {
+        document.getElementById("unit-badge").textContent = "COMPLETE";
+        document.getElementById("skill-badge").textContent = "No Missed Questions";
+        document.getElementById("slide-counter").textContent = "0 of 0";
+        document.getElementById("question-text").textContent = "You currently have no missed questions in this view! Answer more questions or switch back to All Questions.";
+        document.getElementById("options-list").innerHTML = "";
+        document.getElementById("rationale-box").classList.remove("visible");
+        document.getElementById("prev-btn").disabled = true;
+        document.getElementById("next-btn").disabled = true;
+        renderGrid(filtered);
+        updateScoreboard();
+        return;
+      }
+
+      if (currentSlideIndex >= filtered.length) currentSlideIndex = filtered.length - 1;
+      if (currentSlideIndex < 0) currentSlideIndex = 0;
+
+      const currentQ = filtered[currentSlideIndex];
+      const selectedChoice = userResponses[currentQ.id];
+      const isAnswered = selectedChoice !== undefined;
+
+      document.getElementById("unit-badge").textContent = currentQ.unit;
+      document.getElementById("skill-badge").textContent = currentQ.skill;
+      document.getElementById("slide-counter").textContent = `Slide ${currentSlideIndex + 1} of ${filtered.length} (Bank Ref #${currentQ.id})`;
+      document.getElementById("question-text").textContent = currentQ.q;
+
+      const optionsList = document.getElementById("options-list");
+      optionsList.innerHTML = "";
+
+      currentQ.options.forEach((optText, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        if (isAnswered) {
+          btn.disabled = true;
+          if (idx === currentQ.answer) btn.classList.add("correct");
+          else if (idx === selectedChoice && selectedChoice !== currentQ.answer) btn.classList.add("wrong");
+        }
+        btn.innerHTML = `<span class="opt-letter">${LETTERS[idx]}</span><span>${optText}</span>`;
+        btn.addEventListener("click", () => selectOption(currentQ.id, idx));
+        optionsList.appendChild(btn);
+      });
+
+      const rationaleBox = document.getElementById("rationale-box");
+      const rationaleStatus = document.getElementById("rationale-status");
+      const rationaleText = document.getElementById("rationale-text");
+
+      if (isAnswered) {
+        rationaleBox.classList.add("visible");
+        if (selectedChoice === currentQ.answer) {
+          rationaleStatus.textContent = "✓ Correct!";
+          rationaleStatus.className = "rationale-status pass";
+        } else {
+          rationaleStatus.textContent = `✗ Incorrect — You chose ${LETTERS[selectedChoice]}. Correct Answer: ${LETTERS[currentQ.answer]}`;
+          rationaleStatus.className = "rationale-status fail";
+        }
+        rationaleText.textContent = currentQ.rationale;
+      } else {
+        rationaleBox.classList.remove("visible");
+      }
+
+      document.getElementById("prev-btn").disabled = currentSlideIndex === 0;
+      document.getElementById("next-btn").disabled = currentSlideIndex === filtered.length - 1;
+
+      renderGrid(filtered);
+      updateScoreboard();
+    }
+
+    function renderGrid(filtered) {
+      const grid = document.getElementById("question-grid");
+      grid.innerHTML = "";
+      filtered.forEach((q, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "grid-dot";
+        btn.textContent = idx + 1;
+        btn.title = `${q.unit} — Bank Ref #${q.id}`;
+        if (idx === currentSlideIndex) btn.classList.add("current");
+        if (userResponses[q.id] !== undefined) {
+          if (userResponses[q.id] === q.answer) btn.classList.add("answered-correct");
+          else btn.classList.add("answered-wrong");
+        }
+        btn.addEventListener("click", () => {
+          currentSlideIndex = idx;
+          renderSlide();
+        });
+        grid.appendChild(btn);
+      });
+    }
+
+    function selectOption(questionId, optionIdx) {
+      userResponses[questionId] = optionIdx;
+      saveState();
+      renderSlide();
+    }
+
+    // Event Listeners
+    document.getElementById("prev-btn").addEventListener("click", () => {
+      if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        renderSlide();
+      }
+    });
+
+    document.getElementById("next-btn").addEventListener("click", () => {
+      const filtered = getFilteredQuestions();
+      if (currentSlideIndex < filtered.length - 1) {
+        currentSlideIndex++;
+        renderSlide();
+      }
+    });
+
+    document.getElementById("retry-slide-btn").addEventListener("click", () => {
+      const filtered = getFilteredQuestions();
+      if (!filtered[currentSlideIndex]) return;
+      delete userResponses[filtered[currentSlideIndex].id];
+      saveState();
+      renderSlide();
+    });
+
+    document.getElementById("shuffle-deck-btn").addEventListener("click", () => {
+      const hasAnswers = Object.keys(userResponses).length > 0;
+      if (hasAnswers && !confirm("Shuffling the deck and answer options will reset your current scores. Continue?")) {
+        return;
+      }
+      QUESTIONS = buildShuffledDeck();
+      userResponses = {};
+      currentSlideIndex = 0;
+      saveState();
+      renderSlide();
+
+      const shuffleBtn = document.getElementById("shuffle-deck-btn");
+      const originalText = shuffleBtn.textContent;
+      shuffleBtn.textContent = "✓ Shuffled Within Units!";
+      setTimeout(() => {
+        shuffleBtn.textContent = originalText;
+      }, 1400);
+    });
+
+    document.getElementById("reset-all-btn").addEventListener("click", () => {
+      if (confirm("Reset all saved scores and answers across all 60 questions?")) {
+        userResponses = {};
+        saveState();
+        currentSlideIndex = 0;
+        renderSlide();
+      }
+    });
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeFilter = btn.getAttribute("data-filter");
+        currentSlideIndex = 0;
+        renderSlide();
+      });
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") document.getElementById("next-btn").click();
+      if (e.key === "ArrowLeft") document.getElementById("prev-btn").click();
+    });
+
+    // Initialize
+    loadOrInitializeState();
+    renderSlide();
+  </script>
+</body>
+</html>
